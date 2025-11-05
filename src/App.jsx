@@ -16,6 +16,10 @@ function App() {
       <Route path="/registro" element={<Registro />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* <Route path="/agregar-barberia" element={<AgregarBarberia />} />
+        <Route path="/agregar-categoria" element={<AgregarCategoria />} />
+        <Route path="/crear-servicio" element={<CrearServicio />} />
+        <Route path="/ver-servicios" element={<VerServicios />} /> */}
       </Route>
 
       <Route path="*" element={<NoEncontrado />} />
