@@ -14,8 +14,10 @@ function App() {
       <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/registro" element={<Registro />} />
-      <Route path="/dashboard" element={<ProtectedRoute />}>
+      <Route element={<ProtectedRoute />}>
+
       <Route path="/dashboard" element={<Dashboard />} />
+      
       </Route>
 
       <Route path="*" element={<NoEncontrado />} />
