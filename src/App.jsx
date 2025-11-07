@@ -11,13 +11,15 @@ import { Contenedor } from './pages/Contenedor'
 import { Dashboard } from './pages/Dashboard'
 import { Login } from './pages/Login'
 import { Register } from './pages/Register'
+import { store } from './store/store'
+import { EditarServicios } from './pages/EditarServicios'
 
 
 function App() {
   return(
     <>
     {/* <Provider store={store}> */}
-
+      <Provider store={store}>
       <BrowserRouter>
       <Routes>
       <Route path="/" element={<Login />} />
@@ -29,6 +31,7 @@ function App() {
           <Route path="/agregar-categoria" element={<AgregarCategoria />} />
           <Route path="/crear-servicio" element={<CrearServicio />} />
           <Route path="/ver-servicios" element={<VerServicios />} />
+          <Route path="/editar-servicios" element={<EditarServicios />} />
         </Route>
       {/* </Route> */}
 
@@ -36,7 +39,7 @@ function App() {
 
       </Routes>
       </BrowserRouter>
-
+      </Provider>
     {/* </Provider> */}
     </>
   )
