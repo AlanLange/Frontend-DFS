@@ -31,7 +31,7 @@ function App() {
           <Route path="/agregar-categoria" element={<AgregarCategoria />} />
           <Route path="/crear-servicio" element={<CrearServicio />} />
           <Route path="/ver-servicios" element={<VerServicios />} />
-          <Route path="/editar-servicios" element={<EditarServicios />} />
+          <Route path="/editar-servicios/:id" element={<EditarServicios />} />
         </Route>
       {/* </Route> */}
 

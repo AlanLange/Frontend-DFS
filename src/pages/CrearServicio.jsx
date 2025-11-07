@@ -1,12 +1,18 @@
 import { useForm } from "react-hook-form";
 import api from "../api/api";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { addServicio } from "../features/slices/servicios.slice";
+import { useDispatch } from "react-redux";
 
 export const CrearServicio = () => {
 
   const { register, handleSubmit } = useForm();
   const [categorias, setCategorias] = useState([]);
 
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
       api.get("/categorias")
@@ -18,22 +24,16 @@ export const CrearServicio = () => {
         console.log(err);
       });
 
-    return () => {
-      
-    };
-  }, []);(() => {
     
-    return () => {
-      
-    };
-  }, []);
+  }, [])
 
 
   const onSubmit = (data) => {
     api
       .post("/servicios", data)
       .then((res) => {
-        console.log(res.data);
+        navigate("/ver-servicios");
+        dispatch(addServicio(res.data));
       })
       .catch((err) => {
         console.log(err);

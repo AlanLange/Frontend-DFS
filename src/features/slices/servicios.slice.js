@@ -1,20 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  servicio: {
-    id: null
-  }
+  servicio: [
+  ]
 };
 
 export const servicioSlice = createSlice({
   name: "servicio",
   initialState,
   reducers: {
-   setId: (state, action) => {
-      state.servicio.id = action.payload;
+    inicializeServicios: (state, action) => {
+      state.servicio = action.payload;
+    },
+   addServicio: (state, action) => {
+      state.servicio.push(action.payload);
+    },
+    removeServicio: (state, action) => {
+      state.servicio = state.servicio.filter(servicio => servicio._id !== action.payload);
     }
   },
 });
 
-export const { setId } = servicioSlice.actions;
+export const { addServicio, inicializeServicios, removeServicio } = servicioSlice.actions;
 export default servicioSlice.reducer;
