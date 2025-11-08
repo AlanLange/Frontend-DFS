@@ -1,4 +1,36 @@
 {
-    "name": "Aplicación del Clima"
-    
+  "auth": {
+    "fields": {
+      "username": "Nombre de usuario",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña"
+    },
+    "helpers": {
+      "password": "Usa al menos 6 caracteres para mayor seguridad.",
+      "passwordsMatch": "Las contraseñas coinciden"
+    },
+    "login": {
+      "badge": "Barber App • Login",
+      "title": "Iniciar sesión",
+      "subtitle": "Accedé al panel para gestionar tu barbería.",
+      "button": "Iniciar sesión",
+      "submitting": "Iniciando sesión...",
+      "success": "Login exitoso ✅",
+      "error": "Error en el login",
+      "noAccount": "¿No tienes una cuenta?",
+      "goRegister": "Regístrate aquí"
+    },
+    "register": {
+      "badge": "Barber App • Registro",
+      "title": "Crea tu cuenta",
+      "subtitle": "Gestioná tu barbería, servicios y plan desde un solo lugar.",
+      "button": "Crear cuenta",
+      "submitting": "Creando cuenta...",
+      "success": "Registro exitoso 🎉",
+      "error": "Error en el registro",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "goLogin": "Inicia sesión"
+    }
+  }
 }
