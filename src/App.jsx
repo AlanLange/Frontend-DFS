@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux'
-import { store } from './store/store'
-import { BrowserRouter, Routes, Route } from 'react-router'
+// import { store } from './store/store'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NoEncontrado from './components/NoEncontrado'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
@@ -10,7 +10,7 @@ import Dashboard from './pages/Dashboard'
 function App() {
   return(
     <>
-    <Provider store={store}>
+    {/* <Provider store={store}> */}
 
       <BrowserRouter>
       <Routes>
@@ -29,7 +29,7 @@ function App() {
       </Routes>
       </BrowserRouter>
 
-    </Provider>
+    {/* </Provider> */}
     </>
   )
  }
