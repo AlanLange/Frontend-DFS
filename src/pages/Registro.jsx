@@ -7,7 +7,7 @@ import { User, Mail, Lock, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import api from "../api/api";
-import { loguear } from "../features/user.slice";
+import { loguear } from "../features/slices/user.slice";
 
 const Registro = () => {
   const navigate = useNavigate();

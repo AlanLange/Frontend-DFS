@@ -1,6 +1,7 @@
 // import { useDispatch, useSelector } from "react-redux"
 import { Link, NavLink, Outlet } from "react-router-dom"
 import Sidebar from "../components/Sidebar";
+import { TogglePlan } from "./TogglePlan";
 
 export const Contenedor = () => {
 
@@ -17,7 +18,6 @@ export const Contenedor = () => {
 
     return (
         <div className="flex">
-            
             <Sidebar />
 
             <Outlet />
