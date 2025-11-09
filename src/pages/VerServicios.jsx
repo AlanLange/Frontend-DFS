@@ -50,7 +50,6 @@ export const VerServicios = () => {
   useEffect(() => {
       api.get("/categorias")
       .then((res) => {
-        console.log(res.data);
         dispatch(inicializecategorias(res.data.categorias));
       })
       .catch((err) => {
