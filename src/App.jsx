@@ -9,8 +9,8 @@ import { CrearServicio } from './pages/CrearServicio'
 import { VerServicios } from './pages/VerServicios'
 import { Contenedor } from './pages/Contenedor'
 import { Dashboard } from './pages/Dashboard'
-import { Login } from './pages/Login'
-import { Register } from './pages/Register'
+import  Login  from './pages/Login'
+import  Registro from './pages/Registro'
 import { store } from './store/store'
 import { EditarServicios } from './pages/EditarServicios'
 
@@ -23,7 +23,7 @@ function App() {
       <BrowserRouter>
       <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/registro" element={<Register />} />
+      <Route path="/registro" element={<Registro />} />
       {/* <Route element={<ProtectedRoute />}> */}
         <Route element={<Contenedor />}>
           <Route path="/dashboard" element={<Dashboard />} />

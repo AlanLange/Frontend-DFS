@@ -4,21 +4,21 @@ import en from './locales/en/translation.json';
 import es from './locales/es/translation.json';
 
 const idiomaActual = localStorage.getItem('idioma') || 'en';
-i18next.use(initReactI18next).init({
-    resources: {
-        en: { translation: en },
-        es: { translation: es },
-    },
-    lng: idiomaActual, // idioma por defecto
-    fallbackLng: 'es', // idioma de respaldo
-    interpolation: {
-        escapeValue: false, // react ya se encarga del escape
-    },
-    });
-    i18next.on('languageChanged', (lng) => {
-        localStorage.setItem('idioma', lng);
-        });
 
-   
+i18next.use(initReactI18next).init({
+  resources: {
+    en: { translation: en },
+    es: { translation: es },
+  },
+  lng: idiomaActual,
+  fallbackLng: 'es',
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+i18next.on('languageChanged', (lng) => {
+  localStorage.setItem('idioma', lng);
+});
 
 export default i18next;

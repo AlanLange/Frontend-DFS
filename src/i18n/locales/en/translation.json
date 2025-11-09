@@ -1,4 +1,36 @@
 {
-    "name": "Weather App"
-
+  "auth": {
+    "fields": {
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    },
+    "helpers": {
+      "password": "Use at least 6 characters for better security.",
+      "passwordsMatch": "Passwords match"
+    },
+    "login": {
+      "badge": "Barber App • Login",
+      "title": "Sign in",
+      "subtitle": "Access the dashboard to manage your barbershop.",
+      "button": "Sign in",
+      "submitting": "Signing in...",
+      "success": "Login successful ✅",
+      "error": "Login error",
+      "noAccount": "Don't have an account?",
+      "goRegister": "Register here"
+    },
+    "register": {
+      "badge": "Barber App • Register",
+      "title": "Create your account",
+      "subtitle": "Manage your barbershop, services and plan in one place.",
+      "button": "Create account",
+      "submitting": "Creating account...",
+      "success": "Registration successful 🎉",
+      "error": "Registration error",
+      "haveAccount": "Already have an account?",
+      "goLogin": "Sign in"
+    }
+  }
 }
