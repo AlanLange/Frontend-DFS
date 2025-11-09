@@ -13,6 +13,7 @@ export const AgregarBarberia = () => {
       })
       .catch((err) => {
         console.log(err);
+        alert("Error al agregar la barbería, probablemente ya exista una");
       });
   };
 

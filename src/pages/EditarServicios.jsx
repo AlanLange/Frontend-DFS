@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../api/api";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
+import { inicializecategorias } from "../features/slices/categorias.slice";
 
 export const EditarServicios = () => {
   const { id } = useParams();
 
   const [servicio, setServicio] = useState(null);
-  const [categorias, setCategorias] = useState([]);
+  const categorias = useSelector((state) => state.categoria);
 
   const { register, handleSubmit } = useForm();
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     api
@@ -28,15 +31,15 @@ export const EditarServicios = () => {
   useEffect(() => {
       api.get("/categorias")
       .then((res) => {
-        console.log(res.data);
-        setCategorias(res.data);
+        dispatch(inicializecategorias(res.data.categorias));
       })
       .catch((err) => {
         console.log(err);
       });
 
-    
-  }, [])
+
+
+  }, []);
 
   const onSubmit = (data) => {
     api
@@ -50,7 +53,14 @@ export const EditarServicios = () => {
       });
   };
 
+  console.log(categorias);
+
   return (
+    <>
+    {
+      !servicio ? (<h2>Previamente debe de seleccionarse un servicio a editar</h2>
+      ) : (
+        
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Edicion de Servicios</h1>
       {servicio && (
@@ -92,13 +102,13 @@ export const EditarServicios = () => {
             <label>Categoría: </label>
             <select {...register("categoria")}>
               {
-                categorias.categorias.find(categoria => categoria._id === servicio.categoria)?.nombre &&
+                categorias.categoria && categorias.categoria.find(categoria => categoria._id === servicio.categoria)?.nombre &&
                 <option value={servicio.categoria}>
-                  {categorias.categorias.find(categoria => categoria._id === servicio.categoria)?.nombre}
+                  {categorias.categoria.find(categoria => categoria._id === servicio.categoria)?.nombre}
                 </option>
               }
-              {categorias.categorias &&
-                categorias.categorias.map((categoria) => (
+              {categorias.categoria &&
+                categorias.categoria.map((categoria) => (
                   <option key={categoria._id} value={categoria._id}>
                     {categoria.nombre}
                   </option>
@@ -132,5 +142,8 @@ export const EditarServicios = () => {
         </div>
       )}
     </form>
+      )
+    }
+    </>
   );
 };

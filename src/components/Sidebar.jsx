@@ -4,7 +4,7 @@ import { HomeIcon, PlusCircleIcon, TagIcon, ClipboardDocumentIcon, EyeIcon, Penc
 
 const Sidebar = () => {
   return (
-    <div className="h-screen w-64 bg-gray-900 text-gray-100 flex flex-col shadow-lg">
+    <div className="h-screen w-64 bg-gray-900 text-gray-100 flex flex-col shadow-lg ">
       {/* Encabezado del Sidebar */}
       <div className="p-6 text-2xl font-semibold border-b border-gray-700">
         Dashboard
@@ -53,7 +53,7 @@ const Sidebar = () => {
         </Link>
 
         <Link
-          to="/editar-servicios"
+          to={`/editar-servicios/${localStorage.getItem("servicioId")}`}
           className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
         >
           <PencilIcon className="h-5 w-5 text-pink-400" />

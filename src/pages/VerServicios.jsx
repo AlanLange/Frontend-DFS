@@ -3,20 +3,18 @@ import api from "../api/api";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { inicializeServicios, removeServicio } from "../features/slices/servicios.slice";
+import { inicializecategorias } from "../features/slices/categorias.slice";
 
 export const VerServicios = () => {
-  const servicios = useSelector((state) => state.servicio);
+  const {servicio} = useSelector((state) => state.servicio);
+  const categorias = useSelector((state) => state.categoria);
   const dispatch = useDispatch();
-  const [categorias, setCategorias] = useState([]);
-
-  console.log(servicios);
 
   useEffect(() => {
     api
       .get("/servicios")
       .then((res) => {
         dispatch(inicializeServicios(res.data.servicios));
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -24,18 +22,19 @@ export const VerServicios = () => {
 
   }, []);
   
-    useEffect(() => {
-        api.get("/categorias")
-        .then((res) => {
-          console.log(res.data);
-          setCategorias(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  useEffect(() => {
+      api.get("/categorias")
+      .then((res) => {
+        console.log(res.data);
+        dispatch(inicializecategorias(res.data.categorias));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-      
-    }, [])
+    
+  }, [])
+
 
   const handleDelete = (id) => {
     api
@@ -52,6 +51,7 @@ export const VerServicios = () => {
 const navigate = useNavigate();
 
   const handleEdit = (id) => {
+    localStorage.setItem("servicioId", id);
     navigate(`/editar-servicios/${id}`);
   }
 
@@ -60,8 +60,8 @@ const navigate = useNavigate();
   return (
     <div>
       <h1>Servicios</h1>
-      {servicios.servicio &&
-        servicios.servicio.map((servicio) => (
+      <p>Cantidad de servicios: {servicio?.length}</p>
+      {servicio?.map((servicio) => (
           <div
             style={{
               border: "1px solid black",
@@ -76,7 +76,7 @@ const navigate = useNavigate();
               <h2>Nombre: {servicio.nombre}</h2>
               <p>Descripcion:{servicio.descripcion}</p>
               <p>Precio: {servicio.precio}</p>
-              <p>Categoría: {categorias.categorias.find(categoria => categoria._id === servicio.categoria)?.nombre}</p>
+              <p>Categoría: {categorias.categoria && categorias.categoria.find(categoria => categoria._id === servicio.categoria)?.nombre}</p>
               <p>Duración: {servicio.duracion}</p>
             </div>
             <div>

@@ -3,22 +3,26 @@ import api from "../api/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { addServicio } from "../features/slices/servicios.slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { inicializecategorias } from "../features/slices/categorias.slice";
 
 export const CrearServicio = () => {
 
   const { register, handleSubmit } = useForm();
-  const [categorias, setCategorias] = useState([]);
 
+  
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const categorias = useSelector((state) => state.categoria);
+
+  console.log(categorias);
   useEffect(() => {
       api.get("/categorias")
       .then((res) => {
         console.log(res.data);
-        setCategorias(res.data);
+        dispatch(inicializecategorias(res.data.categorias));
       })
       .catch((err) => {
         console.log(err);
@@ -33,10 +37,14 @@ export const CrearServicio = () => {
       .post("/servicios", data)
       .then((res) => {
         navigate("/ver-servicios");
-        dispatch(addServicio(res.data));
+        dispatch(addServicio(res.data.servicio));
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.data.message == "Límite de servicios alcanzado para el plan Plus") {
+          alert("Límite de servicios alcanzado para el plan Plus");
+        } else {
+          alert("Error al crear el servicio");
+        }
       });
   };
 
@@ -48,7 +56,7 @@ export const CrearServicio = () => {
       <select {...register("categoria")}>
         <option value="">Seleccione una categoría</option>
         {
-          categorias.categorias && categorias.categorias.map((categoria) => (
+          categorias.categoria && categorias.categoria.map((categoria) => (
             <option key={categoria._id} value={categoria._id}>{categoria.nombre}</option>
           ))
         }
