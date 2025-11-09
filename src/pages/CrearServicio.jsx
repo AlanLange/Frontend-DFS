@@ -43,7 +43,8 @@ export const CrearServicio = () => {
         if (err.response.data.message == "Límite de servicios alcanzado para el plan Plus") {
           alert("Límite de servicios alcanzado para el plan Plus");
         } else {
-          alert("Error al crear el servicio");
+          alert("Error al crear el servicio " + err.response.data.message);
+          console.log(err.response);
         }
       });
   };
