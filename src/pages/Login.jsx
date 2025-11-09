@@ -23,7 +23,7 @@ const Login = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = async (formData) => {
-    const { username, password } = formData;
+    const { username, password} = formData;
     try {
       const response = await api.post(
         "auth/login",
