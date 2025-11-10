@@ -52,10 +52,7 @@ useEffect(() => {
 
   return (
     <div style={{width:"80%"}}>
-        <h1>Planes: </h1>
-        <h2>Cambiar de plan  <TogglePlan /></h2>
-        <p>Estado actual: {plan}</p>
-        <br />
+        
         <hr />
         <h1>Informe de Uso para tu plan {plan}</h1><br />
         <h3>Cantidad de barberías: {barberias && 1}</h3><br />

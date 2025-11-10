@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { HomeIcon, PlusCircleIcon, TagIcon, ClipboardDocumentIcon, EyeIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, PlusCircleIcon, TagIcon, ClipboardDocumentIcon, EyeIcon, ChartBarIcon, CurrencyDollarIcon } from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
   return (
@@ -58,6 +58,14 @@ const Sidebar = () => {
         >
           <ChartBarIcon className="h-5 w-5 text-indigo-400" />
           Informe de uso
+        </Link>
+
+        <Link
+          to="/cambiar-plan"
+          className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
+        >
+          <CurrencyDollarIcon className="h-5 w-5 text-pink-400" />
+          Cambiar Plan
         </Link>
       </nav>
 

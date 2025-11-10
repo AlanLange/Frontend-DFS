@@ -13,6 +13,7 @@ import  Login  from './pages/Login'
 import  Registro from './pages/Registro'
 import { EditarServicios } from './pages/EditarServicios'
 import { InformeUso } from './pages/InformeUso'
+import { CambiarPlan } from './pages/CambiarPlan'
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/ver-servicios" element={<VerServicios />} />
           <Route path="/editar-servicios/:id" element={<EditarServicios />} />
           <Route path="/informe-uso" element={<InformeUso />} />
+          <Route path="/cambiar-plan" element={<CambiarPlan />} />
         </Route>
       </Route> 
 
