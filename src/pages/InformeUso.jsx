@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { inicializecategorias } from "../features/slices/categorias.slice";
 import api from "../api/api";
 import { inicializeServicios } from "../features/slices/servicios.slice";
+import { initializeBarberia } from "../features/slices/barberia.slice";
 
 export const InformeUso = () => {
 

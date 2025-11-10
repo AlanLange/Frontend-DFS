@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,9 +6,34 @@ import { inicializeServicios, removeServicio } from "../features/slices/servicio
 import { inicializecategorias } from "../features/slices/categorias.slice";
 
 export const VerServicios = () => {
-  const {servicio} = useSelector((state) => state.servicio);
   const categorias = useSelector((state) => state.categoria);
   const dispatch = useDispatch();
+  
+  const [filter, setFilter] = useState("todos");
+  
+  const servicios = useSelector((state) => state.servicio.servicio);
+  
+  const servicio = useMemo(() => {
+    if (!servicios) return [];
+    
+    const now = new Date();
+    return servicios.filter(serv => {
+      const createdAt = new Date(serv.createdAt);
+      
+      if (filter === "todos") return true;
+      if (filter === "semana") {
+        const weekAgo = new Date(now);
+        weekAgo.setDate(now.getDate() - 7);
+        return createdAt >= weekAgo;
+      }
+      if (filter === "mes") {
+        const monthAgo = new Date(now);
+        monthAgo.setMonth(now.getMonth() - 1);
+        return createdAt >= monthAgo;
+      }
+      return false;
+    });
+  }, [servicios, filter]);
 
   useEffect(() => {
     api
@@ -25,7 +50,6 @@ export const VerServicios = () => {
   useEffect(() => {
       api.get("/categorias")
       .then((res) => {
-        console.log(res.data);
         dispatch(inicializecategorias(res.data.categorias));
       })
       .catch((err) => {
@@ -48,7 +72,7 @@ export const VerServicios = () => {
   };
 
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleEdit = (id) => {
     localStorage.setItem("servicioId", id);
@@ -61,6 +85,13 @@ const navigate = useNavigate();
     <div>
       <h1>Servicios</h1>
       <p>Cantidad de servicios: {servicio?.length}</p>
+      <select onChange={(e) => setFilter(e.target.value)} value={filter}>
+        <option value="todos">Todos</option>
+        <option value="semana">Últimos 7 días</option>
+        <option value="mes">Últimos 30 días</option>
+      </select>
+      <br />
+      <br />
       {servicio?.map((servicio) => (
           <div
             style={{
@@ -78,6 +109,7 @@ const navigate = useNavigate();
               <p>Precio: {servicio.precio}</p>
               <p>Categoría: {categorias.categoria && categorias.categoria.find(categoria => categoria._id === servicio.categoria)?.nombre}</p>
               <p>Duración: {servicio.duracion}</p>
+              <p>Fecha de creación: {new Date(servicio.createdAt).toLocaleDateString()}</p>
             </div>
             <div>
               <button
