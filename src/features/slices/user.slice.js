@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const storedLogged = localStorage.getItem("logged") === "true";
+
 const initialState = {
-    logged:false
+    logged: storedLogged
 };
 
 const userSlice = createSlice({
@@ -10,9 +12,11 @@ const userSlice = createSlice({
   reducers: {
     loguear: (state) => {
         state.logged = true;
+        localStorage.setItem("logged", "true");
     },
     desloguear: (state) => {
         state.logged = false;
+        localStorage.removeItem("logged");
     }
   },
 });

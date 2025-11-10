@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-
 // Componente arrow que actúa como layout/protección de rutas
 const ProtectedRoute = () => {
     const isAuth = useSelector((state) => state.user.logged);
