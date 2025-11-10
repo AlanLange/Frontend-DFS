@@ -42,6 +42,16 @@ export const EditarServicios = () => {
   }, []);
 
   const onSubmit = (data) => {
+    // Convert date (from input yyyy-mm-dd) to ISO before sending if present
+    if (data.fecha) {
+      try {
+        data.fecha = new Date(data.fecha).toISOString();
+      } catch (e) {
+        // if conversion fails, keep the original value
+        console.log("Fecha conversion error", e);
+      }
+    }
+
     api
       .patch(`/servicios/${id}`, data)
       .then((res) => {
@@ -50,6 +60,7 @@ export const EditarServicios = () => {
       })
       .catch((err) => {
         alert("Error al editar el servicio");
+        console.log(err);
       });
   };
 
@@ -122,6 +133,25 @@ export const EditarServicios = () => {
               type="text"
               defaultValue={servicio.duracion}
               {...register("duracion")}
+            />
+            <br />
+            {/* Fecha: HTML date input expects yyyy-mm-dd */}
+            <label>Fecha: </label>
+            <input
+              style={{ border: "1px solid black" }}
+              type="date"
+              defaultValue={
+                servicio.createdAt
+                  ? (() => {
+                      try {
+                        return new Date(servicio.createdAt).toISOString().slice(0, 10);
+                      } catch (e) {
+                        return "";
+                      }
+                    })()
+                  : ""
+              }
+              {...register("createdAt")}
             />
             <br />
           </div>
