@@ -7,7 +7,7 @@ import { User, Lock, Sparkles, LogIn } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import api from "../api/api";
-import { loguear } from "../features/slices/user.slice";
+import { loguear,cambiarPlan } from "../features/slices/user.slice";
 
 const Login = () => {
   const [mensaje, setMensaje] = useState("");
@@ -23,7 +23,7 @@ const Login = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = async (formData) => {
-    const { username, password} = formData;
+    const { username, password } = formData;
     try {
       const response = await api.post(
         "auth/login",
@@ -32,11 +32,14 @@ const Login = () => {
       );
 
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("plan", response.data.plan);
+        const { token, plan } = response.data;
 
-        dispatch(loguear());
+      // Guardamos token en localStorage
+      localStorage.setItem("token", token);
+
+      // Actualizamos el store global
+      dispatch(loguear());
+      dispatch(cambiarPlan(plan));
         setTipoMensaje("success");
         setMensaje("Login successful ✅");
 
@@ -51,7 +54,8 @@ const Login = () => {
       console.error("Login error:", error);
       setTipoMensaje("error");
       setMensaje(
-        "Login failed. " + (error.response?.data?.message || "Unexpected error.")
+        "Login failed. " +
+          (error.response?.data?.message || "Unexpected error.")
       );
     }
   };

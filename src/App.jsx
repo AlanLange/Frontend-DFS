@@ -14,9 +14,17 @@ import  Registro from './pages/Registro'
 import { EditarServicios } from './pages/EditarServicios'
 import { InformeUso } from './pages/InformeUso'
 import { CambiarPlan } from './pages/CambiarPlan'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { initAuth } from './auth/initAuth'
 
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    initAuth(dispatch);
+  }, [dispatch]);
   return(
     <>
     {/* <Provider store={store}> */}

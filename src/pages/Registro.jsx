@@ -39,14 +39,14 @@ const Registro = () => {
       const response = await api.post("auth/register", data, { skipAuth: true });
 
       if (response.status === 201) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("username", username);
-        localStorage.setItem("plan", "Plus");
+       const { token } = response.data;
+
+      localStorage.setItem("token", token);
+      dispatch(loguear());
+      dispatch(cambiarPlan("Plus"));
 
         setTipoMensaje("success");
         setMensaje(t("auth.register.success")); // Registro exitoso
-
-        dispatch(loguear());
 
         navigate("/dashboard");
       } else {
