@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import api from "../api/api";
-import { useState, useEffect } from "react";
+import {useEffect } from "react";
 import { useNavigate } from "react-router";
 import { addServicio } from "../features/slices/servicios.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { inicializecategorias } from "../features/slices/categorias.slice";
-
 
 export const CrearServicio = () => {
 
@@ -37,7 +36,7 @@ export const CrearServicio = () => {
     const servicioData = {
       ...data,
       precio: Number(data.precio), 
-      ...(!data.createdAt ? { createdAt: new Date().toISOString() } : { createdAt: dateInputToISOStringUTC(data.createdAt) })
+      ...(!data.createdAt ? { createdAt: new Date().toISOString() } : { createdAt: new Date(data.createdAt).toISOString() })
     };
     api
       .post("/servicios", servicioData)
