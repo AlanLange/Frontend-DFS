@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cambiarPlan } from "../features/slices/user.slice";
 
 export const TogglePlan = () => {
-const plan = localStorage.getItem("plan");
+
+  const plan = useSelector((state) => state.user.plan);
+
   const [isOn, setIsOn] = useState(plan === "Premium" ? true : false);
+
   const dispatch = useDispatch();
 
   const toggle = () => {
@@ -13,7 +16,6 @@ const plan = localStorage.getItem("plan");
       .patch("/cliente/plan", { plan: isOn ? "Plus" : "Premium" })
       .then((res) => {
         alert("Cambiado a plan: " + res.data.plan);
-        localStorage.setItem("plan", res.data.plan);
         setIsOn(!isOn);
         dispatch(cambiarPlan(res.data.plan));
       })

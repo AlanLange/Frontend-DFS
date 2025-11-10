@@ -24,9 +24,11 @@ function App() {
   useEffect(() => {
     initAuth(dispatch);
   }, [dispatch]);
+
+  
   return(
     <>
-=      <BrowserRouter>
+      <BrowserRouter>
       <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/registro" element={<Registro />} />

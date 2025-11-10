@@ -13,7 +13,7 @@ export const VerServicios = () => {
   
   const servicios = useSelector((state) => state.servicio.servicio);
   
-  const servicio = useMemo(() => {
+  const serviciosFiltrados = useMemo(() => {
     if (!servicios) return [];
     
     const now = new Date();
@@ -84,7 +84,7 @@ export const VerServicios = () => {
   return (
     <div>
       <h1>Servicios</h1>
-      <p>Cantidad de servicios: {servicio?.length}</p>
+      <p>Cantidad de servicios: {serviciosFiltrados?.length}</p>
       <select onChange={(e) => setFilter(e.target.value)} value={filter}>
         <option value="todos">Todos</option>
         <option value="semana">Últimos 7 días</option>
@@ -92,7 +92,7 @@ export const VerServicios = () => {
       </select>
       <br />
       <br />
-      {servicio?.map((servicio) => (
+      {serviciosFiltrados?.map((servicio) => (
           <div
             style={{
               border: "1px solid black",
