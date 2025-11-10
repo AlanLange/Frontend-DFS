@@ -1,15 +1,20 @@
 import { useForm } from "react-hook-form";
 import api from "../api/api";
+import { useDispatch } from "react-redux";
+import { addBarberia } from "../features/slices/barberia.slice";
 
 export const AgregarBarberia = () => {
   const { register, handleSubmit } = useForm();
+
+  const dispatch = useDispatch();
 
   const onSubmit = (data) => {
     console.log(data);
     api
       .post("/barberia", data)
       .then((res) => {
-        console.log(res.data);
+        dispatch(addBarberia(res.data.barberia));
+        alert("Barbería agregada con éxito");
       })
       .catch((err) => {
         console.log(err);
