@@ -9,7 +9,6 @@ export const Dashboard = () => {
 
   const { barberia } = useSelector(state => state.barberia);
 
-  console.log(barberia);
 
   const dispatch = useDispatch();
 
@@ -17,7 +16,6 @@ export const Dashboard = () => {
     api
       .get("/barberia")
       .then((res) => {
-        console.log(res.data);
         dispatch(initializeBarberia(res.data));
       })
       .catch((err) => {

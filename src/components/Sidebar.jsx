@@ -1,8 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { HomeIcon, PlusCircleIcon, TagIcon, ClipboardDocumentIcon, EyeIcon, ChartBarIcon, CurrencyDollarIcon } from "@heroicons/react/24/outline";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  HomeIcon,
+  PlusCircleIcon,
+  TagIcon,
+  ClipboardDocumentIcon,
+  EyeIcon,
+  ChartBarIcon,
+  CurrencyDollarIcon,
+} from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <div className="h-screen w-64 bg-gray-900 text-gray-100 flex flex-col shadow-lg ">
       {/* Encabezado del Sidebar */}
@@ -68,7 +83,17 @@ const Sidebar = () => {
           Cambiar Plan
         </Link>
       </nav>
-
+      <div className="p-4 border-t border-gray-700 flex justify-center">
+        <button
+          onClick={handleLogout}
+          style={{ cursor: "pointer" }}
+          type="button"
+          aria-label="Cerrar sesión"
+          className="w-full max-w-xs bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 transition-shadow shadow-sm"
+        >
+          Salir
+        </button>
+      </div>
       {/* Pie del Sidebar */}
       <div className="p-4 border-t border-gray-700 text-sm text-gray-400">
         © 2025 BarberApp

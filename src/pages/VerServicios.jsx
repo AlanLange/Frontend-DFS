@@ -103,13 +103,16 @@ export const VerServicios = () => {
               alignItems: "center",
             }}
           >
-            <div key={servicio._id}>
+            <div key={servicio._id} style={{display:"flex"}}>
+              <div>
               <h2>Nombre: {servicio.nombre}</h2>
               <p>Descripcion:{servicio.descripcion}</p>
               <p>Precio: {servicio.precio}</p>
               <p>Categoría: {categorias.categoria && categorias.categoria.find(categoria => categoria._id === servicio.categoria)?.nombre}</p>
               <p>Duración: {servicio.duracion}</p>
               <p>Fecha de creación: {new Date(servicio.createdAt).toLocaleDateString()}</p>
+              </div>
+              <img style={{width:"150px", marginLeft:"10px"}} src={"https://obligatorio-desarollo-full-stack.vercel.app/"+servicio.urlImage} alt="imagen" />
             </div>
             <div>
               <button
