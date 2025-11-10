@@ -9,7 +9,7 @@ export const VerServicios = () => {
   const categorias = useSelector((state) => state.categoria);
   const dispatch = useDispatch();
   
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("todos");
   
   const servicios = useSelector((state) => state.servicio.servicio);
   
@@ -109,6 +109,7 @@ export const VerServicios = () => {
               <p>Precio: {servicio.precio}</p>
               <p>Categoría: {categorias.categoria && categorias.categoria.find(categoria => categoria._id === servicio.categoria)?.nombre}</p>
               <p>Duración: {servicio.duracion}</p>
+              <p>Fecha de creación: {new Date(servicio.createdAt).toLocaleDateString()}</p>
             </div>
             <div>
               <button

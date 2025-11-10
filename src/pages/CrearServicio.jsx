@@ -6,6 +6,7 @@ import { addServicio } from "../features/slices/servicios.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { inicializecategorias } from "../features/slices/categorias.slice";
 
+
 export const CrearServicio = () => {
 
   const { register, handleSubmit } = useForm();
@@ -33,8 +34,13 @@ export const CrearServicio = () => {
 
 
   const onSubmit = (data) => {
+    const servicioData = {
+      ...data,
+      precio: Number(data.precio), 
+      ...(!data.createdAt ? { createdAt: new Date().toISOString() } : { createdAt: dateInputToISOStringUTC(data.createdAt) })
+    };
     api
-      .post("/servicios", data)
+      .post("/servicios", servicioData)
       .then((res) => {
         navigate("/ver-servicios");
         dispatch(addServicio(res.data.servicio));
@@ -63,6 +69,7 @@ export const CrearServicio = () => {
         }
       </select><br />
       <input {...register("duracion")} placeholder="Duración del servicio" /><br />
+      <input type="date" {...register("createdAt")} placeholder="fecha" /><br />
       <button type="submit" style={{ backgroundColor: "blue", color: "white", padding: "5px" }}>Crear Servicio</button>
     </form>
   )
