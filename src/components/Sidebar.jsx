@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   HomeIcon,
   PlusCircleIcon,
@@ -10,6 +10,51 @@ import {
   CurrencyDollarIcon,
 } from "@heroicons/react/24/outline";
 
+const menuItems = [
+  {
+    to: "/dashboard",
+    label: "Inicio",
+    icon: HomeIcon,
+    color: "text-sky-400",
+  },
+  {
+    to: "/agregar-barberia",
+    label: "Agregar Barbería",
+    icon: PlusCircleIcon,
+    color: "text-emerald-400",
+  },
+  {
+    to: "/agregar-categoria",
+    label: "Agregar Categoría",
+    icon: TagIcon,
+    color: "text-amber-400",
+  },
+  {
+    to: "/crear-servicio",
+    label: "Crear Servicio",
+    icon: ClipboardDocumentIcon,
+    color: "text-violet-400",
+  },
+  {
+    to: "/ver-servicios",
+    label: "Ver Servicios",
+    icon: EyeIcon,
+    color: "text-teal-400",
+  },
+  {
+    to: "/informe-uso",
+    label: "Informe de uso",
+    icon: ChartBarIcon,
+    color: "text-indigo-400",
+  },
+  {
+    to: "/cambiar-plan",
+    label: "Cambiar Plan",
+    icon: CurrencyDollarIcon,
+    color: "text-pink-400",
+  },
+];
+
 const Sidebar = () => {
   const navigate = useNavigate();
 
@@ -19,84 +64,60 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen w-64 bg-gray-900 text-gray-100 flex flex-col shadow-lg ">
-      {/* Encabezado del Sidebar */}
-      <div className="p-6 text-2xl font-semibold border-b border-gray-700">
-        Dashboard
+    <div className="h-screen w-64 bg-slate-950 border-r border-slate-800 text-slate-100 flex flex-col shadow-xl shadow-slate-900/60">
+      {/* Header */}
+      <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h1 className="text-lg font-semibold text-slate-50">BarberApp</h1>
+          <p className="text-[11px] text-slate-400">
+            Panel de administración
+          </p>
+        </div>
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-violet-500 flex items-center justify-center text-xs font-bold shadow-md shadow-sky-500/40">
+          BA
+        </div>
       </div>
 
-      {/* Opciones del menú */}
-      <nav className="flex-1 p-4 space-y-2">
-        <Link
-          to="/dashboard"
-          className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-        >
-          <HomeIcon className="h-5 w-5 text-blue-400" />
-          Inicio
-        </Link>
+      {/* Navigation */}
+      <nav className="flex-1 px-3 py-4 overflow-y-auto">
+        <p className="text-[11px] uppercase tracking-wide text-slate-500 px-2 mb-3">
+          Navegación
+        </p>
 
-        <Link
-          to="/agregar-barberia"
-          className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-        >
-          <PlusCircleIcon className="h-5 w-5 text-green-400" />
-          Agregar Barbería
-        </Link>
-
-        <Link
-          to="/agregar-categoria"
-          className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-        >
-          <TagIcon className="h-5 w-5 text-yellow-400" />
-          Agregar Categoría
-        </Link>
-
-        <Link
-          to="/crear-servicio"
-          className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-        >
-          <ClipboardDocumentIcon className="h-5 w-5 text-purple-400" />
-          Crear Servicio
-        </Link>
-
-        <Link
-          to="/ver-servicios"
-          className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-        >
-          <EyeIcon className="h-5 w-5 text-teal-400" />
-          Ver Servicios
-        </Link>
-
-        <Link
-          to="/informe-uso"
-          className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-        >
-          <ChartBarIcon className="h-5 w-5 text-indigo-400" />
-          Informe de uso
-        </Link>
-
-        <Link
-          to="/cambiar-plan"
-          className="flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-800 transition"
-        >
-          <CurrencyDollarIcon className="h-5 w-5 text-pink-400" />
-          Cambiar Plan
-        </Link>
+        <div className="space-y-1">
+          {menuItems.map(({ to, label, icon: Icon, color }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                [
+                  "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
+                  isActive
+                    ? "bg-slate-800 text-slate-50 border border-sky-500/40"
+                    : "text-slate-300 hover:bg-slate-900 hover:text-slate-50 border border-transparent",
+                ].join(" ")
+              }
+            >
+              <Icon className={`h-5 w-5 ${color}`} />
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </div>
       </nav>
-      <div className="p-4 border-t border-gray-700 flex justify-center">
+
+      {/* Footer / Logout */}
+      <div className="px-4 py-3 border-t border-slate-800">
         <button
           onClick={handleLogout}
-          style={{ cursor: "pointer" }}
           type="button"
           aria-label="Cerrar sesión"
-          className="w-full max-w-xs bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300 transition-shadow shadow-sm"
+          className="w-full inline-flex items-center justify-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400/60 text-sm font-medium transition-shadow shadow-sm shadow-red-500/30"
         >
           Salir
         </button>
-      </div>
-      {/* Pie del Sidebar */}
-      <div className="p-4 border-t border-gray-700 text-sm text-gray-400">
-        © 2025 BarberApp
+        <p className="mt-3 text-[11px] text-slate-500 text-center">
+          © 2025 BarberApp
+        </p>
       </div>
     </div>
   );
