@@ -46,28 +46,21 @@ The architecture prioritizes clarity, modularity, and scalability, ensuring a cl
 A clear directory organization is used to separate concerns and improve maintainability:
 
 src
-│
 ├── api
 │ └── Axios configuration and API handlers
-│
 ├── auth
 │ └── Authentication utilities and session validation logic
-│
 ├── components
 │ └── Reusable UI elements and shared components
-│
 ├── features
 │ ├── slices
 │ │ └── Redux Toolkit slices for global state
 │ └── Feature-specific logic
-│
 ├── i18n
 │ └── locales
 │ ├── en
 │ └── es
-│
 ├── pages
 │ └── Application pages (Login, Register, Dashboard, Services, Categories, Plans, etc.)
-│
 └── store
 └── Redux store configuration
