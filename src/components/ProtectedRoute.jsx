@@ -1,15 +1,12 @@
+// src/components/ProtectedRoute.jsx
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-// Componente arrow que actúa como layout/protección de rutas
+
 const ProtectedRoute = () => {
+  const logged = useSelector((state) => state.user.logged);
 
-    const token = localStorage.getItem("token");
+  if (!logged) return <Navigate to="/" replace />;
 
-    // Si no está autenticado → redirige a login
-    if (!token) return <Navigate to="/" replace />;
-
-    // Si está autenticado → renderiza rutas hijas
-    return <Outlet />;
+  return <Outlet />;
 };
-
 export default ProtectedRoute;

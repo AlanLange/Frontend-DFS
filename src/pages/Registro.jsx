@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import api from "../api/api";
 import { loguear } from "../features/slices/user.slice";
-
+import { cambiarPlan } from "../features/slices/user.slice";
 const Registro = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

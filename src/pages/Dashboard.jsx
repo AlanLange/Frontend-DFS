@@ -144,8 +144,8 @@ export const Dashboard = () => {
   const totalCategorias = categoria?.length || 0;
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-8 md:px-10 flex justify-center">
-      <div className="w-full max-w-6xl">
+    <div className="relative min-h-screen bg-slate-950 px-4 py-8 md:px-10 flex justify-center">
+      <div className="w-full max-w-6xl relative z-10">
         {/* Header */}
         <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
@@ -216,7 +216,8 @@ export const Dashboard = () => {
           <div className="lg:col-span-2 rounded-2xl bg-slate-900/80 border border-slate-700 p-4 md:p-6 shadow-xl shadow-sky-500/20">
             {graficaData.labels.length === 0 ? (
               <div className="h-64 flex items-center justify-center text-sm text-slate-400">
-                No hay datos suficientes para mostrar la gráfica. Crea categorías y servicios para ver el análisis.
+                No hay datos suficientes para mostrar la gráfica. Crea
+                categorías y servicios para ver el análisis.
               </div>
             ) : (
               <Bar options={chartOptions} data={graficaData} />
