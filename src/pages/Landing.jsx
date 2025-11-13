@@ -175,7 +175,7 @@ const Landing = () => {
         "Perfecto para una sola sucursal",
       ],
       cta: "Empezar gratis",
-      to: "/registro",
+      to: "/register",
       featured: false,
       badge: null,
     },
@@ -373,7 +373,7 @@ const Landing = () => {
                   className="flex flex-col sm:flex-row gap-4"
                 >
                   <Link
-                    to="/registro"
+                    to="/register"
                     className="group flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-sky-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-xl shadow-emerald-500/25 transition-all hover:shadow-emerald-500/40 hover:scale-105"
                   >
                     Crear cuenta gratis
@@ -870,7 +870,7 @@ const Landing = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
-                  to="/registro"
+                  to="/register"
                   className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-400 to-sky-500 px-8 py-4 text-lg font-semibold text-slate-950 shadow-xl shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-105 transition-all"
                 >
                   Crear cuenta en menos de un minuto
@@ -938,7 +938,7 @@ const Landing = () => {
                 </li>
                 <li>
                   <Link
-                    to="/registro"
+                    to="/register"
                     className="hover:text-emerald-400 transition-colors"
                   >
                     Crear cuenta
