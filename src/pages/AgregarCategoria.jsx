@@ -9,10 +9,21 @@ import { useEffect, useState } from "react";
 
 export const AgregarCategoria = () => {
   const { categoria } = useSelector((state) => state.categoria);
-  const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
 
-  const [feedback, setFeedback] = useState({ type: null, message: "" });
+  // Estados para manejo de mensajes
+  const [mensaje, setMensaje] = useState("");
+  const [tipoMensaje, setTipoMensaje] = useState("error");
+
+  // useForm con validación en tiempo real
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid, isSubmitting }
+  } = useForm({ 
+    mode: "onChange" 
+  });
 
   useEffect(() => {
     api
@@ -25,34 +36,37 @@ export const AgregarCategoria = () => {
       });
   }, [dispatch]);
 
-  // limpiar feedback luego de unos segundos
+  // limpiar mensaje luego de unos segundos
   useEffect(() => {
-    if (!feedback.message) return;
-    const timer = setTimeout(
-      () => setFeedback({ type: null, message: "" }),
-      3500
-    );
+    if (!mensaje) return;
+    const timer = setTimeout(() => setMensaje(""), 3500);
     return () => clearTimeout(timer);
-  }, [feedback]);
+  }, [mensaje]);
 
-  const onSubmit = (data) => {
-    api
-      .post("/categorias", data)
-      .then((res) => {
-        dispatch(addCategoria(res.data.categoria));
-        setFeedback({
-          type: "success",
-          message: "Categoría agregada con éxito.",
-        });
+  const onSubmit = async (data) => {
+    try {
+      const response = await api.post("/categorias", data);
+      
+      if (response.status === 200 || response.status === 201) {
+        dispatch(addCategoria(response.data.categoria));
+        setTipoMensaje("success");
+        setMensaje("Categoría agregada con éxito ✅");
         reset();
-      })
-      .catch((err) => {
-        console.log(err);
-        setFeedback({
-          type: "error",
-          message: "Error al agregar la categoría. Intenta nuevamente.",
-        });
-      });
+      } else {
+        setTipoMensaje("error");
+        setMensaje("Error al agregar la categoría. Intenta nuevamente.");
+      }
+    } catch (error) {
+      console.error("Error agregando categoría:", error);
+      setTipoMensaje("error");
+      
+      // Manejo específico de errores de la API
+      if (error.response?.data?.message) {
+        setMensaje(error.response.data.message);
+      } else {
+        setMensaje("Error al agregar la categoría. Intenta nuevamente.");
+      }
+    }
   };
 
   return (
@@ -80,29 +94,42 @@ export const AgregarCategoria = () => {
                 Nombre de la categoría
               </label>
               <input
-                {...register("nombre")}
+                {...register("nombre", {
+                  required: "El nombre de la categoría es requerido",
+                  minLength: {
+                    value: 3,
+                    message: "El nombre debe tener al menos 3 caracteres",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "El nombre no puede exceder los 50 caracteres",
+                  },
+                })}
                 placeholder="Ej. Corte, Barba, Paquete completo..."
                 className="w-full px-4 py-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-500"
               />
+              {errors.nombre && (
+                <p className="text-red-400 text-xs mt-1">
+                  {errors.nombre.message}
+                </p>
+              )}
             </div>
 
-            {feedback.message && (
-              <p
-                className={`text-xs mt-1 ${
-                  feedback.type === "success"
-                    ? "text-emerald-300"
-                    : "text-red-300"
-                }`}
-              >
-                {feedback.message}
+            {/* Mensaje de estado */}
+            {mensaje && (
+              <p className={`text-xs mt-1 ${
+                tipoMensaje === "success" ? "text-emerald-400" : "text-red-400"
+              }`}>
+                {mensaje}
               </p>
             )}
 
             <button
               type="submit"
-              className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold shadow-md shadow-sky-500/30 transition-colors"
+              disabled={!isValid || isSubmitting}
+              className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 disabled:bg-sky-500/60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-md shadow-sky-500/30 transition-colors"
             >
-              Agregar categoría
+              {isSubmitting ? "Agregando..." : "Agregar categoría"}
             </button>
           </form>
 

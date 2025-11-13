@@ -193,21 +193,7 @@ export const InformeUso = () => {
                   </p>
                 </div>
                 <div className="flex-1 max-w-[60%]">
-                  <div className="w-full h-2.5 rounded-full bg-slate-800 overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-sky-500 transition-all duration-500"
-                      style={{
-                        width: `${
-                          Math.min(
-                            (serviciosFiltradosSemana.length /
-                              (totalServicios || 1)) *
-                              100,
-                            100
-                          ) || 0
-                        }%`,
-                      }}
-                    />
-                  </div>
+                  
                 </div>
               </div>
 
@@ -222,21 +208,7 @@ export const InformeUso = () => {
                   </p>
                 </div>
                 <div className="flex-1 max-w-[60%]">
-                  <div className="w-full h-2.5 rounded-full bg-slate-800 overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-emerald-500 transition-all duration-500"
-                      style={{
-                        width: `${
-                          Math.min(
-                            (serviciosFiltradosMes.length /
-                              (totalServicios || 1)) *
-                              100,
-                            100
-                          ) || 0
-                        }%`,
-                      }}
-                    />
-                  </div>
+                  
                 </div>
               </div>
             </div>

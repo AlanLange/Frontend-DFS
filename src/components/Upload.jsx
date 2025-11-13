@@ -84,7 +84,7 @@ const Upload = ({ onUploaded }) => {
           className="flex flex-col items-center justify-center w-full px-4 py-6 border-2 border-dashed border-slate-600 rounded-xl bg-slate-900/70 hover:border-sky-500 transition-colors cursor-pointer"
         >
           <span className="text-sm font-medium text-slate-200">
-            Haz clic para seleccionar una imagen
+            {url ? "Imagen subida" : "Haz clic para seleccionar una imagen"}
           </span>
           <span className="text-xs text-slate-400 mt-1">
             o arrástrala aquí

@@ -28,13 +28,23 @@ export const EditarServicios = () => {
 
   const [servicio, setServicio] = useState(null);
   const [loadingServicio, setLoadingServicio] = useState(true);
+  const [mensaje, setMensaje] = useState("");
+  const [tipoMensaje, setTipoMensaje] = useState("error");
 
   const { categoria: categoriasState } = useSelector((state) => state.categoria);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { register, handleSubmit, setValue, watch } = useForm();
+  const { 
+    register, 
+    handleSubmit, 
+    setValue, 
+    watch,
+    formState: { errors, isValid, isSubmitting }
+  } = useForm({ 
+    mode: "onChange" 
+  });
 
   const urlImageForm = watch("urlImage");
 
@@ -42,6 +52,13 @@ export const EditarServicios = () => {
   const currentImageUrl = resolveImageUrl(
     urlImageForm || (servicio && servicio.urlImage)
   );
+
+  // limpiar mensaje después de unos segundos
+  useEffect(() => {
+    if (!mensaje) return;
+    const timer = setTimeout(() => setMensaje(""), 3500);
+    return () => clearTimeout(timer);
+  }, [mensaje]);
 
   // Cargar servicio a editar
   useEffect(() => {
@@ -68,6 +85,8 @@ export const EditarServicios = () => {
       })
       .catch((err) => {
         console.log(err);
+        setTipoMensaje("error");
+        setMensaje("Error al cargar el servicio");
       })
       .finally(() => setLoadingServicio(false));
   }, [id, setValue]);
@@ -84,12 +103,17 @@ export const EditarServicios = () => {
       });
   }, [dispatch]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const payload = { ...data };
 
     // Normalizar precio
     if (payload.precio) {
       payload.precio = Number(payload.precio);
+    }
+
+    // Normalizar duración
+    if (payload.duracion) {
+      payload.duracion = Number(payload.duracion);
     }
 
     // Convertir fecha (yyyy-mm-dd) a ISO si viene del input
@@ -101,15 +125,28 @@ export const EditarServicios = () => {
       }
     }
 
-    api
-      .patch(`/servicios/${id}`, payload)
-      .then(() => {
-        navigate("/ver-servicios");
-      })
-      .catch((err) => {
-        alert("Error al editar el servicio");
-        console.log(err);
-      });
+    try {
+      const response = await api.patch(`/servicios/${id}`, payload);
+      
+      if (response.status === 200) {
+        setTipoMensaje("success");
+        setMensaje("Servicio actualizado con éxito ✅");
+        
+        setTimeout(() => {
+          navigate("/ver-servicios");
+        }, 1500);
+      } else {
+        setTipoMensaje("error");
+        setMensaje("Error al actualizar el servicio. Intenta nuevamente.");
+      }
+    } catch (error) {
+      console.error("Error actualizando servicio:", error);
+      setTipoMensaje("error");
+      setMensaje(
+        "Error al actualizar el servicio. " +
+        (error.response?.data?.message || "")
+      );
+    }
   };
 
   if (loadingServicio) {
@@ -191,30 +228,63 @@ export const EditarServicios = () => {
             {/* Campo oculto para la URL de la imagen */}
             <input type="hidden" {...register("urlImage")} />
 
+            {/* Nombre del servicio */}
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-slate-100">
                 Nombre del servicio
               </label>
               <input
-                {...register("nombre")}
+                {...register("nombre", {
+                  required: "El nombre del servicio es requerido",
+                  minLength: {
+                    value: 3,
+                    message: "El nombre debe tener al menos 3 caracteres",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "El nombre no puede exceder los 50 caracteres",
+                  },
+                })}
                 className="w-full px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-500"
                 placeholder="Nombre del servicio"
               />
+              {errors.nombre && (
+                <p className="text-red-400 text-xs mt-1">
+                  {errors.nombre.message}
+                </p>
+              )}
             </div>
 
+            {/* Descripción */}
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-slate-100">
                 Descripción
               </label>
               <textarea
-                {...register("descripcion")}
+                {...register("descripcion", {
+                  required: "La descripción es requerida",
+                  minLength: {
+                    value: 10,
+                    message: "La descripción debe tener al menos 10 caracteres",
+                  },
+                  maxLength: {
+                    value: 500,
+                    message: "La descripción no puede exceder los 500 caracteres",
+                  },
+                })}
                 rows={3}
                 placeholder="Describe el servicio..."
                 className="w-full px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-500 resize-none"
               />
+              {errors.descripcion && (
+                <p className="text-red-400 text-xs mt-1">
+                  {errors.descripcion.message}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Precio */}
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-slate-100">
                   Precio
@@ -224,31 +294,67 @@ export const EditarServicios = () => {
                     $
                   </span>
                   <input
-                    {...register("precio")}
+                    type="number"
+                    {...register("precio", {
+                      required: "El precio es requerido",
+                      min: {
+                        value: 1,
+                        message: "El precio debe ser mayor a 0",
+                      },
+                      max: {
+                        value: 10000,
+                        message: "El precio no puede exceder $10,000",
+                      },
+                    })}
                     placeholder="Ej. 500"
                     className="w-full pl-7 pr-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-500"
                   />
                 </div>
+                {errors.precio && (
+                  <p className="text-red-400 text-xs mt-1">
+                    {errors.precio.message}
+                  </p>
+                )}
               </div>
 
+              {/* Duración */}
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-slate-100">
                   Duración (minutos)
                 </label>
                 <input
-                  {...register("duracion")}
+                  type="number"
+                  {...register("duracion", {
+                    required: "La duración es requerida",
+                    min: {
+                      value: 5,
+                      message: "La duración mínima es 5 minutos",
+                    },
+                    max: {
+                      value: 480,
+                      message: "La duración máxima es 480 minutos (8 horas)",
+                    },
+                  })}
                   placeholder="Ej. 30"
                   className="w-full px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder:text-slate-500"
                 />
+                {errors.duracion && (
+                  <p className="text-red-400 text-xs mt-1">
+                    {errors.duracion.message}
+                  </p>
+                )}
               </div>
             </div>
 
+            {/* Categoría */}
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-slate-100">
                 Categoría
               </label>
               <select
-                {...register("categoria")}
+                {...register("categoria", {
+                  required: "La categoría es requerida",
+                })}
                 className="w-full px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
               >
                 <option value="">Seleccione una categoría</option>
@@ -259,8 +365,14 @@ export const EditarServicios = () => {
                     </option>
                   ))}
               </select>
+              {errors.categoria && (
+                <p className="text-red-400 text-xs mt-1">
+                  {errors.categoria.message}
+                </p>
+              )}
             </div>
 
+            {/* Fecha de creación */}
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-slate-100">
                 Fecha de creación
@@ -272,12 +384,23 @@ export const EditarServicios = () => {
               />
             </div>
 
+            {/* Mensaje de estado */}
+            {mensaje && (
+              <p className={`text-sm text-center ${
+                tipoMensaje === "success" ? "text-emerald-400" : "text-red-400"
+              }`}>
+                {mensaje}
+              </p>
+            )}
+
+            {/* Botones */}
             <div className="pt-2 flex gap-3">
               <button
                 type="submit"
-                className="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold shadow-md shadow-sky-500/30 transition-colors"
+                disabled={!isValid || isSubmitting}
+                className="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 disabled:bg-sky-500/60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-md shadow-sky-500/30 transition-colors"
               >
-                Guardar cambios
+                {isSubmitting ? "Guardando..." : "Guardar cambios"}
               </button>
               <button
                 type="button"
