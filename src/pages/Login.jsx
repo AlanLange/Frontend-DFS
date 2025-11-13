@@ -5,17 +5,23 @@ import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { User, Lock, Sparkles, LogIn } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
+import { useEffect } from "react";
 import api from "../api/api";
 import { loguear,cambiarPlan } from "../features/slices/user.slice";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [mensaje, setMensaje] = useState("");
   const [tipoMensaje, setTipoMensaje] = useState("error");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-
+  
+  useEffect(() => {
+   const token = localStorage.getItem("token");
+   if (token) {
+     navigate("/dashboard");
+   }
+ }, []);
   const {
     register,
     handleSubmit,
@@ -210,7 +216,7 @@ const Login = () => {
           <div className="mt-6 text-center text-xs text-slate-400">
             <span>{t("auth.login.noAccount")} </span>
             <Link
-              to="/registro"
+              to="/register"
               className="font-semibold text-blue-400 hover:text-blue-300 hover:underline transition"
             >
               {t("auth.login.goRegister")}

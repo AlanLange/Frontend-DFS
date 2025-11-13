@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-  const logged = useSelector((state) => state.user.logged);
+  
+  const token = localStorage.getItem("token")
 
-  if (!logged) return <Navigate to="/" replace />;
+  if (!token) return <Navigate to="/login" replace />;
 
   return <Outlet />;
 };

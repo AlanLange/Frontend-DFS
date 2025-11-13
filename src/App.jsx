@@ -16,6 +16,7 @@ import { CambiarPlan } from './pages/CambiarPlan'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { initAuth } from './auth/initAuth'
+import Landing from './pages/Landing'
 
 
 function App() {
@@ -30,8 +31,9 @@ function App() {
     <>
       <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/registro" element={<Registro />} />
+        <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Registro />} />
       <Route element={<ProtectedRoute />}> 
         <Route element={<Contenedor />}>
           <Route path="/dashboard" element={<Dashboard />} />

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { User, Mail, Lock, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
+import { useEffect } from "react";
 import api from "../api/api";
 import { loguear } from "../features/slices/user.slice";
 import { cambiarPlan } from "../features/slices/user.slice";
@@ -13,6 +13,12 @@ const Registro = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const [mensaje, setMensaje] = useState("");
   const [tipoMensaje, setTipoMensaje] = useState("error"); // 'success' | 'error'
@@ -300,7 +306,7 @@ const Registro = () => {
           <p className="mt-6 text-center text-xs text-slate-400">
             {t("auth.register.haveAccount")}{" "}
             <Link
-              to="/"
+              to="/login"
               className="font-semibold text-blue-400 hover:text-blue-300 hover:underline transition"
             >
               {t("auth.register.goLogin")}

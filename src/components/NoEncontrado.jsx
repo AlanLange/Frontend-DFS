@@ -32,7 +32,7 @@ const NoEncontrado = () => {
         ) : (
           <div className="flex flex-col gap-3">
             <Link
-              to="/"
+              to="/login"
               className="w-full inline-flex items-center justify-center rounded-lg py-2.5 text-sm font-medium
                          bg-indigo-600 hover:bg-indigo-700 text-white transition-colors"
             >
@@ -40,7 +40,7 @@ const NoEncontrado = () => {
             </Link>
 
             <Link
-              to="/registro"
+              to="/register"
               className="w-full inline-flex items-center justify-center rounded-lg py-2.5 text-sm font-medium
                          border border-slate-600 text-slate-200 hover:bg-slate-800 transition-colors"
             >
