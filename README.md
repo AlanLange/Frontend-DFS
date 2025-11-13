@@ -1,4 +1,4 @@
-💈 Barbería Fullstack – Frontend
+# 💈 Barbería Fullstack – Frontend
 
 ![React](https://img.shields.io/badge/React-18+-blue?logo=react)
 ![Vite](https://img.shields.io/badge/Vite-build-purple?logo=vite)
