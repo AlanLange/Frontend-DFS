@@ -1,73 +1,79 @@
-# Frontend – Barber Shop Management System
+# 💈 Barbería Fullstack – Frontend
 
-This repository contains the frontend application for the Barber Shop Management System developed in the *Fullstack Development* course.  
-Built with **React (Vite)**, it interacts with a REST API to manage users, authentication, plans, services, categories, and general shop data.  
-The architecture prioritizes clarity, modularity, and scalability, ensuring a clean separation between views, components, state logic, and API communication.
+![React](https://img.shields.io/badge/React-18+-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-build-purple?logo=vite)
+![Redux](https://img.shields.io/badge/Redux_Toolkit-global_state-764abc?logo=redux)
+![Tailwind](https://img.shields.io/badge/TailwindCSS-styling-38bdf8?logo=tailwindcss)
+![i18next](https://img.shields.io/badge/i18n-multilanguage-yellow?logo=i18next)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)
+![License](https://img.shields.io/badge/License-Academic-lightgrey)
+
+**Obligatorio 1 — Desarrollo Fullstack (ORT Uruguay, 2025)**  
+Autores: **Alan Langelan** y **Gastón Jaurena**
+
+Frontend for the **Barber Shop Management System** developed in the *Fullstack Development* course.  
+Built with **React (Vite)** and connected to a REST API to manage users, authentication, plans, services, categories, and general shop data.
+
+The architecture focuses on **clarity**, **modularity**, and **scalability**, keeping views, components, state logic, and API communication clearly separated.
 
 ---
 
-## Technologies
+## 🚀 Tech Stack
 
 - **React + Vite** – UI development and build tooling  
-- **React Router DOM** – client-side routing  
-- **Redux Toolkit** – global state management  
+- **React Router DOM** – Client-side routing  
+- **Redux Toolkit** – Global state management  
 - **Axios** – HTTP client for API requests  
-- **TailwindCSS** – utility-first styling  
-- **Framer Motion** – view and component animations  
-- **Lucide-React** – lightweight icon library  
-- **i18next** – internationalization support (English / Spanish)
+- **TailwindCSS** – Utility-first styling  
+- **Framer Motion** – View and component animations  
+- **Lucide-React** – Lightweight icon library  
+- **i18next** – Internationalization (English / Spanish)
 
 ---
 
-## Main Features
+## ✨ Main Features
 
-- User registration and authentication with JWT.
-- Automatic session validation and persistence.
-- Protected routes for authenticated users.
-- Service management: creation, edition, visualization and deletion.
-- Category management with dynamic backend synchronization.
-- Plan management (Plus / Premium) with restricted actions.
-- Dashboard displaying usage and system metrics.
-- Consistent layout structure using a sidebar and routed content.
+- User registration and authentication with **JWT**.  
+- Automatic session validation and persistence.  
+- Protected routes for authenticated users.  
+- Service management:
+  - Create, edit, view, and delete services.  
+- Category management synchronized dynamically with the backend.  
+- Plan management (Plus / Premium) with restricted actions based on plan.  
+- Dashboard with usage and system metrics.  
+- Consistent layout with a fixed **sidebar** and routed main content.
 
 ---
 
-## Future Improvements
+## 🔮 Future Improvements
 
-- Comprehensive barber management (creation, edition, and assignment).  
-- Appointment scheduling system allowing customers to choose date, time, and barber.  
-- Expanded analytics and performance insights on the dashboard.  
+- Full barber management (creation, edition, and assignment).  
+- Appointment scheduling system:
+  - Customers can choose date, time, and barber.  
+- Extended analytics and performance insights in the dashboard.  
 - Optional integration for reminders and administrative notifications.
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
-A clear directory organization is used to separate concerns and improve maintainability:
-
+```text
 src
-│
 ├── api
-│ └── Axios configuration and API handlers
-│
+│   └── Axios configuration and API handlers
 ├── auth
-│ └── Authentication utilities and session validation logic
-│
+│   └── Authentication utilities and session validation logic
 ├── components
-│ └── Reusable UI elements and shared components
-│
+│   └── Reusable UI elements and shared components
 ├── features
-│ ├── slices
-│ │ └── Redux Toolkit slices for global state
-│ └── Feature-specific logic
-│
+│   ├── slices
+│   │   └── Redux Toolkit slices for global state
+│   └── Feature-specific logic
 ├── i18n
-│ └── locales
-│ ├── en
-│ └── es
-│
+│   └── locales
+│       ├── en
+│       └── es
 ├── pages
-│ └── Application pages (Login, Register, Dashboard, Services, Categories, Plans, etc.)
-│
+│   └── Application pages (Login, Register, Dashboard, Services, Categories, Plans, etc.)
 └── store
-└── Redux store configuration
+    └── Redux store configuration
