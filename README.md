@@ -1,4 +1,15 @@
-# 💈 Barber Shop Management System – Frontend
+💈 Barbería Fullstack – Frontend
+
+![React](https://img.shields.io/badge/React-18+-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-build-purple?logo=vite)
+![Redux](https://img.shields.io/badge/Redux_Toolkit-global_state-764abc?logo=redux)
+![Tailwind](https://img.shields.io/badge/TailwindCSS-styling-38bdf8?logo=tailwindcss)
+![i18next](https://img.shields.io/badge/i18n-multilanguage-yellow?logo=i18next)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)
+![License](https://img.shields.io/badge/License-Academic-lightgrey)
+
+**Obligatorio 1 — Desarrollo Fullstack (ORT Uruguay, 2025)**  
+Autores: **Alan Langelan** y **Gastón Jaurena**
 
 Frontend for the **Barber Shop Management System** developed in the *Fullstack Development* course.  
 Built with **React (Vite)** and connected to a REST API to manage users, authentication, plans, services, categories, and general shop data.
