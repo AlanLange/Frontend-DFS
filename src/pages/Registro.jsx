@@ -55,6 +55,7 @@ const Registro = () => {
         setMensaje(t("auth.register.success")); // Registro exitoso
 
         navigate("/dashboard");
+        window.location.reload();
       } else {
         setTipoMensaje("error");
         setMensaje(response.data?.message || t("auth.register.error"));

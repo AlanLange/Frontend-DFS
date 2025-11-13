@@ -52,6 +52,7 @@ const Login = () => {
         setTimeout(() => {
           navigate("/dashboard");
         }, 1000);
+        window.location.reload();
       } else {
         setTipoMensaje("error");
         setMensaje("Login failed. Please try again.");
